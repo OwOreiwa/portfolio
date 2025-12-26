@@ -12,8 +12,8 @@ import HeaderLink from './HeaderLink.astro';
 	header {
 		margin: 0;
 		padding: 0;
-		background: white;
-		box-shadow: 0 2px 8px rgba(var(--black), 5%);
+		background: rgb(var(--base));
+		box-shadow: 0 2px 8px rgba(var(--base-comp-1), 5%);
 
 		position: sticky;
 		top: 0;
@@ -25,12 +25,12 @@ import HeaderLink from './HeaderLink.astro';
 	}
 
 	header a {
-		color: var(--black);
+		color: rgb(var(--base-comp-1));
 		text-decoration: none;
 	}
 	header a.active {
 		text-decoration: none;
-		border-bottom-color: var(--accent);
+		border-bottom-color: rgb(var(--accent));
 	}
 	.internal-links {
 		display: flex;

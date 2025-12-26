@@ -23,27 +23,25 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				position: absolute;
 				width: 100%;
 				height: 100%;
-				background: linear-gradient(rgba(var(--gray), 0.5), rgba(var(--black), 0.75));
+				background: linear-gradient(rgba(var(--base-comp-3), 0.5), rgba(var(--base-satu), 0.75));
 			}
 			.title {
 				font-size: 4em;
-				color: rgb(var(--gray-light));
+				color: rgb(var(--base-comp-1));
 				margin: 0;
 				position: absolute;
 				top: 30%;
 				left: 5%;
-				height: 0;
 			}
 			.date {
-				color: rgb(var(--gray));
+				color: rgb(var(--base-comp-4));
 				margin: 0;
 				position: absolute;
 				top: 50%;
 				left: 6%;
-				height: 0;
 			}
 			.last-updated-on {
-				color: rgb(var(--gray-light));
+				color: rgb(var(--base-comp-5));
 				font-style: italic;
 				white-space: nowrap;
 				position: absolute;
@@ -51,8 +49,10 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 			}
 			.prose {
 				width: var(--width);
+				padding: var(--padding);
 				margin: auto;
-				color: rgb(var(--gray-dark));
+				color: rgb(var(--base-comp-2));
+				background-color: rgb(var(--base));
 			}
 		</style>
 	</head>
@@ -62,7 +62,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 		<main>
 			<article>
 				<div class="hero-image image-wider">
-					{heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}
+					{heroImage && <Image src={heroImage} alt="" />}
 					<h1 class="title">{title}</h1>
 					<div class="date">
 						<FormattedDate date={pubDate} />
