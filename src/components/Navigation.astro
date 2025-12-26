@@ -1,0 +1,36 @@
+---
+import NavigationLink from './NavigationLink.astro';
+---
+
+<nav>
+	<ul class="internal-links">
+		<li><NavigationLink href=`${import.meta.env.BASE_URL}/`>Home</NavigationLink></li>
+		<li><NavigationLink href=`${import.meta.env.BASE_URL}/blog`>Blog</NavigationLink></li>
+	</ul>
+</nav>
+<style>
+	nav {
+		margin: 0;
+		padding: 0;
+
+		position: fixed;
+		top: 20px;
+		left: 3vw;
+		z-index: 1224;
+	}
+
+	nav a {
+		font-size: 0.8em;
+		letter-spacing: -0.05em;
+		color: rgb(var(--base-comp-1));
+	}
+	ul {
+		list-style: none;
+		line-height: 2.2em;
+		padding: 0;
+	}
+	ul li a {
+		display: inline-block;
+		width: calc(4ch + 4em);
+	}
+</style>

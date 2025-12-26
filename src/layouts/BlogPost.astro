@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import FormattedDate from '../components/FormattedDate.astro';
-import Header from '../components/Header.astro';
+import Navigation from '../components/Navigation.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
 
@@ -31,21 +31,21 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				margin: 0;
 				position: absolute;
 				top: 30%;
-				left: 5%;
+				left: 10%;
 			}
 			.date {
 				color: rgb(var(--base-comp-4));
 				margin: 0;
 				position: absolute;
 				top: 50%;
-				left: 6%;
+				left: 11%;
 			}
 			.last-updated-on {
 				color: rgb(var(--base-comp-5));
 				font-style: italic;
 				white-space: nowrap;
 				position: absolute;
-				left: 7%;
+				left: 12%;
 			}
 			.prose {
 				width: var(--width);
@@ -58,7 +58,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 	</head>
 
 	<body>
-		<Header />
+		<Navigation />
 		<main>
 			<article>
 				<div class="hero-image image-wider">

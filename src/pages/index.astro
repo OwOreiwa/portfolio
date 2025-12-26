@@ -1,6 +1,6 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
+import Navigation from '../components/Navigation.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 ---
 
@@ -8,9 +8,16 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 <html lang="en">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+			main {
+				width: var(--width);
+				padding: var(--padding);
+				margin: auto;
+			}
+		</style>
 	</head>
 	<body>
-		<Header />
+		<Navigation />
 		<main>
 			<p>
 				Lorem Ipsum
