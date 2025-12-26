@@ -1,0 +1,45 @@
+---
+import HeaderLink from './HeaderLink.astro';
+---
+
+<header>
+	<div class="internal-links">
+		<HeaderLink href="/">Home</HeaderLink>
+		<HeaderLink href="/blog">Blog</HeaderLink>
+	</div>
+</header>
+<style>
+	header {
+		margin: 0;
+		padding: 0;
+		background: white;
+		box-shadow: 0 2px 8px rgba(var(--black), 5%);
+
+		position: sticky;
+		top: 0;
+		z-index: 1224;
+	}
+	h2 {
+		margin: 0;
+		font-size: 1em;
+	}
+
+	header a {
+		color: var(--black);
+		text-decoration: none;
+	}
+	header a.active {
+		text-decoration: none;
+		border-bottom-color: var(--accent);
+	}
+	.internal-links {
+		display: flex;
+		align-items: flex-end;
+		justify-content: flex-start;
+		padding: 4px 0 0;
+	}
+	.internal-links a {
+		padding: 0 1em;
+		border-bottom: 4px solid transparent;
+	}
+</style>
