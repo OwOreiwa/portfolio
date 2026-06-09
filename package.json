@@ -14,9 +14,11 @@
     "@astrojs/rss": "^4.0.14",
     "@astrojs/sitemap": "^3.6.0",
     "astro": "^5.16.6",
+    "html2canvas": "^1.4.1",
     "nico-snapshot": "^0.1.4",
     "scss": "^0.2.4",
-    "sharp": "^0.34.3"
+    "sharp": "^0.34.3",
+    "three": "^0.184.0"
   },
   "devDependencies": {
     "gh-pages": "^6.3.0",

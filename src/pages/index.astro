@@ -5,37 +5,16 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import './index.scss';
 
 const medleys = [
-	{ video: "https://www.nicovideo.jp/watch/sm45424969", thumbnail: "https://nicovideo.cdn.nimg.jp/thumbnails/45424969/45424969.95998928.M" },
-  { video: "https://www.nicovideo.jp/watch/sm44732043", thumbnail: "https://nicovideo.cdn.nimg.jp/thumbnails/44732043/44732043.98300596.M" },
+	{ video: "https://www.nicovideo.jp/watch/sm45424969", number: 2 },
+  { video: "https://www.nicovideo.jp/watch/sm44732043", number: 1 },
 ]
 
 const signatureWorks = [
-  { video: "https://www.nicovideo.jp/watch/sm46230941", thumbnail: "https://nicovideo.cdn.nimg.jp/thumbnails/46230941/46230941.16419100.M" },
-	{ video: "https://www.nicovideo.jp/watch/sm45586409", thumbnail: "https://nicovideo.cdn.nimg.jp/thumbnails/45586409/45586409.5776059.M" },
-	{ video: "https://www.nicovideo.jp/watch/sm44770684", thumbnail: "https://nicovideo.cdn.nimg.jp/thumbnails/44770684/44770684.4457937.M" },
-	{ video: "https://www.nicovideo.jp/watch/sm44493335", thumbnail: "https://nicovideo.cdn.nimg.jp/thumbnails/44493335/44493335.63662746.M" },
-	{ video: "https://www.nicovideo.jp/watch/sm43103357", thumbnail: "https://nicovideo.cdn.nimg.jp/thumbnails/43103357/43103357.90673052.M" },
-]
-
-const compilations = [
-  { video: "https://www.nicovideo.jp/watch/sm45822361", thumbnail: "https://nicovideo.cdn.nimg.jp/thumbnails/45822361/45822361.18189924.M" },
-	{ video: "https://www.nicovideo.jp/watch/sm45689361", thumbnail: "https://nicovideo.cdn.nimg.jp/thumbnails/45689361/45689361.25630664.M" },
-	{ video: "https://www.nicovideo.jp/watch/sm45423864", thumbnail: "https://nicovideo.cdn.nimg.jp/thumbnails/45423864/45423864.83087834.M" },
-	{ video: "https://www.nicovideo.jp/watch/sm45323758", thumbnail: "https://nicovideo.cdn.nimg.jp/thumbnails/45323758/45323758.16286027.M" },
-	{ video: "https://www.nicovideo.jp/watch/sm44733819", thumbnail: "https://nicovideo.cdn.nimg.jp/thumbnails/44733819/44733819.40783285.M" },
-	{ video: "https://www.nicovideo.jp/watch/sm44728262", thumbnail: "https://nicovideo.cdn.nimg.jp/thumbnails/44728262/44728262.74791739.M" },
-	{ video: "https://www.nicovideo.jp/watch/sm44605520", thumbnail: "https://nicovideo.cdn.nimg.jp/thumbnails/44605520/44605520.81965626.M" },
-	{ video: "https://www.nicovideo.jp/watch/sm44387026", thumbnail: "https://nicovideo.cdn.nimg.jp/thumbnails/44387026/44387026.86725021.M" },
-	{ video: "https://www.nicovideo.jp/watch/sm44332868", thumbnail: "https://nicovideo.cdn.nimg.jp/thumbnails/44332868/44332868.64431982.M" },
-	{ video: "https://www.nicovideo.jp/watch/sm44265464", thumbnail: "https://nicovideo.cdn.nimg.jp/thumbnails/44265464/44265464.64851662.M" },
-	{ video: "https://www.nicovideo.jp/watch/sm44211490", thumbnail: "https://nicovideo.cdn.nimg.jp/thumbnails/44211490/44211490.99165222.M" },
-	{ video: "https://www.nicovideo.jp/watch/sm44137224", thumbnail: "https://nicovideo.cdn.nimg.jp/thumbnails/44137224/44137224.42330760.M" },
-	{ video: "https://www.nicovideo.jp/watch/sm43984610", thumbnail: "https://nicovideo.cdn.nimg.jp/thumbnails/43984610/43984610.73469416.M" },
-	{ video: "https://www.nicovideo.jp/watch/sm43806242", thumbnail: "https://nicovideo.cdn.nimg.jp/thumbnails/43806242/43806242.64876665.M" },
-	{ video: "https://www.nicovideo.jp/watch/sm43805070", thumbnail: "https://nicovideo.cdn.nimg.jp/thumbnails/43805070/43805070.11662735.M" },
-	{ video: "https://www.nicovideo.jp/watch/sm43715207", thumbnail: "https://nicovideo.cdn.nimg.jp/thumbnails/43715207/43715207.84576117.M" },
-	{ video: "https://www.nicovideo.jp/watch/sm43698303", thumbnail: "https://nicovideo.cdn.nimg.jp/thumbnails/43698303/43698303.36113001.M" },
-	{ video: "https://www.nicovideo.jp/watch/sm43525998", thumbnail: "https://nicovideo.cdn.nimg.jp/thumbnails/43525998/43525998.6292734.M" },
+  { video: "https://www.nicovideo.jp/watch/sm46230941", description: "Inspired by Heisei-era dramas and reimagined in a contemporary style" },
+	{ video: "https://www.nicovideo.jp/watch/sm45586409", description: "A tribute to my former community, filled with inside jokes" },
+	{ video: "https://www.nicovideo.jp/watch/sm44770684", description: "Based on the 2017 Rei-no-Are category and Homo-to-miru series" },
+	{ video: "https://www.nicovideo.jp/watch/sm44493335", description: "My most-viewed video, created while practicing lyric rewriting and learning Blender" },
+	{ video: "https://www.nicovideo.jp/watch/sm43103357", description: "My first-ever work, created for the OtoMAD Start Dash" },
 ]
 ---
 
@@ -44,40 +23,16 @@ const compilations = [
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 		<script>
-			import { initIndexBelt } from "../scripts/index-belt";
-			initIndexBelt();
+			import { initIndexCylinder } from "../scripts/index-cylinder";
+			initIndexCylinder();
 		</script>
 	</head>
 	<body>
-		<Navigation />
-		<main>
+		<!-- show-belt-preview -->
+		<div class="cylinder-view">
 			<div class="belt">
 				<div class="belt-track">
 					<div class="belt-unit">
-						<div class="medleys">
-							<h5 class="medleys-label">
-								Medleys
-							</h5>
-							<div class="medleys-content">
-								{
-									medleys.map((x) => (
-										<a href={x.video} target="_blank"><img src={x.thumbnail}/></a>
-									))
-								}
-							</div>
-						</div>
-						<div class="signature-works">
-							<h4 class="signature-works-label">
-								Signature Works
-							</h4>
-							<div class="signature-works-content">
-								{
-									signatureWorks.map((x) => (
-										<a href={x.video} target="_blank"><img src={x.thumbnail}/></a>
-									))
-								}
-							</div>
-						</div>
 						<div class="nutrition-facts">
 							<div class="nutrition-facts-content">
 								<h2>Nutrition Facts</h2>
@@ -93,7 +48,7 @@ const compilations = [
 											<img class="tag" src=`${import.meta.env.BASE_URL}/images/TouchDesigner.png` alt="TouchDesigner"/>
 										</div>
 										<div class="label">
-											Music / Video
+											prod
 										</div>
 									</div>
 									<div class="divider-thin"/>
@@ -105,7 +60,7 @@ const compilations = [
 											<img class="tag" src=`${import.meta.env.BASE_URL}/images/Aseprite.png` alt="Aseprite"/>
 										</div>
 										<div class="label">
-											Art
+											art
 										</div>
 									</div>
 									<div class="divider-thin"/>
@@ -117,27 +72,45 @@ const compilations = [
 											<img class="tag" src=`${import.meta.env.BASE_URL}/images/Python.png` alt="Python"/>
 										</div>
 										<div class="label">
-											Programming
+											dev
 										</div>
 									</div>
 								</div>
 								<div class="divider-bold"/>
-								<p>What I do — I'm a Japanese Average FL Studio / After Effects Enjoyer with an interest in music production. (bruh I haven't released any songs under this name yet, it just feels kinda inappropriate given my position) My remixes frequently feature Hyperflip and Metal. I’m also interested in typography and logo design.</p>
+								<p>What I do — I'm a Japanese Average FL Studio / After Effects Enjoyer with an interest in music production. (bruh I haven't released any songs under this name yet, it just feels kinda inappropriate given my position) My remixes frequently feature Hyperflip and Metal. I'm also interested in typography and logo design.</p>
 								<p>What I like — I enjoy Colour Bass, Hypertrance, and Piano Hip-hop, and I listen to producers like Ace Aura, Ipsiom, and DJ Okawari.</p>
 							</div>
 							<div class="nutrition-facts-under">
 								<h6>PLEASE CONTACT US VIA DISCORD</h6>
 							</div>
 						</div>
-						<div class="compilations">
-							<h5 class="compilations-label">
-								Compilations
+						<div class="medleys">
+							<h5 class="medleys-label">
+								Medleys
 							</h5>
-							<div class="divider-thin"/>
-							<div class="compilations-content">
+							<div class="medleys-content">
+								<div class="medleys-series">
+									<span class="medleys-series-title">
+										RandomContext
+									</span>
+									<span class="medleys-series-numbers">
+										{
+											medleys.reverse().map((x) => (
+												<a href={x.video} target="_blank">{x.number}</a>
+											))
+										}
+									</span>
+								</div>
+							</div>
+						</div>
+						<div class="signature-works">
+							<h4 class="signature-works-label">
+								Signature Works
+							</h4>
+							<div class="signature-works-content">
 								{
-									compilations.map((x) => (
-										<a href={x.video} target="_blank"><img src={x.thumbnail}/></a>
+									signatureWorks.map((x) => (
+										<a href={x.video} target="_blank">{x.description}</a>
 									))
 								}
 							</div>
@@ -145,6 +118,7 @@ const compilations = [
 						<div class="links">
 							<div class="name">
 								<span class="first">不学</span>
+								<span class="slash">／</span>
 								<span class="aka">iPhone歴史</span>
 							</div>
 							<div><a href="https://www.nicovideo.jp/user/88802441" target="_blank">Nicovideo</a></div>
@@ -153,6 +127,7 @@ const compilations = [
 					</div>
 				</div>
 			</div>
-		</main>
+		</div>
+		<Navigation />
 	</body>
 </html>
