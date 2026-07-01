@@ -1,19 +1,32 @@
 import html2canvas from "html2canvas";
 import * as THREE from "three";
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 
 const SCENE_BACKGROUND = 0xe8e8e8;
 
 const CAMERA_FOV = 10;
 const CAMERA_NEAR = 0.1;
 const CAMERA_FAR = 100;
-const CAMERA_POSITION = { x: 0, y: 0, z: 1 } as const;
+const CAMERA_POSITION = { x: 0, y: 0, z: 25 } as const;
 
 const CYLINDER_RADIUS = 1;
 const CYLINDER_HEIGHT = 3;
 const CYLINDER_RADIAL_SEGMENTS = 64;
 const CYLINDER_COLOR = 0xffffff;
 
+const CAN_POSITION_X = 0;
+const CAN_POSITION_Y = 0;
+const CAN_POSITION_Z = 0;
+const CAN_SCALE_X = 1.01;
+const CAN_SCALE_Y = 0.96;
+const CAN_SCALE_Z = 1.01;
+
+const BELT_HEIGHT_PX = 1080;
+const BELT_WORLD_SCALE = CYLINDER_HEIGHT / BELT_HEIGHT_PX;
 const BELT_SURFACE_OFFSET = 0.004;
+const BELT_POSITION_X = 0;
+const BELT_POSITION_Y = -0.05;
+const BELT_POSITION_Z = 0;
 const BELT_RADIAL_SEGMENTS_MIN = 48;
 const BELT_RADIAL_SEGMENTS_PER_RADIAN = 48;
 
@@ -31,6 +44,24 @@ const DIRECTIONAL_LIGHT_POSITION = { x: 3, y: 4, z: 5 } as const;
 const MAX_DEVICE_PIXEL_RATIO = 2;
 const CAPTURE_BACKGROUND = "#ffffff";
 const LINKS_ROW_CAPTURE_ROTATE = "270deg";
+const TOON_GRADIENT_MAP_URL = "public/maps/fiveTone.jpg";
+
+const loadToonGradientMap = () => {
+  const gradientMap = new THREE.TextureLoader().load(TOON_GRADIENT_MAP_URL);
+  gradientMap.minFilter = THREE.NearestFilter;
+  gradientMap.magFilter = THREE.NearestFilter;
+  gradientMap.generateMipmaps = false;
+  return gradientMap;
+};
+
+const createToonMaterial = (
+  gradientMap: THREE.Texture,
+  options: THREE.MeshToonMaterialParameters = {},
+) =>
+  new THREE.MeshToonMaterial({
+    ...options,
+    gradientMap,
+  });
 
 type HitTarget = {
   element: HTMLAnchorElement;
@@ -302,17 +333,6 @@ const prepareBeltCloneForCapture = (liveBelt: HTMLElement, element: HTMLElement)
   syncLinksCloneLayout(liveBelt, element);
 };
 
-const projectHeightPx = (
-  top: THREE.Vector3,
-  bottom: THREE.Vector3,
-  camera: THREE.PerspectiveCamera,
-  viewportHeight: number,
-) => {
-  const topNdc = top.clone().project(camera);
-  const bottomNdc = bottom.clone().project(camera);
-  return (Math.abs(bottomNdc.y - topNdc.y) * viewportHeight) / 2;
-};
-
 export const initIndexCylinder = () => {
   const container = document.querySelector(".cylinder-view");
   const belt = document.querySelector(".belt");
@@ -341,21 +361,46 @@ export const initIndexCylinder = () => {
   );
   container.appendChild(renderer.domElement);
 
+  const toonGradientMap = loadToonGradientMap();
+
   const rotGroup = new THREE.Group();
   scene.add(rotGroup);
 
+  /*
   const cylinderGeometry = new THREE.CylinderGeometry(
     CYLINDER_RADIUS,
     CYLINDER_RADIUS,
     CYLINDER_HEIGHT,
     CYLINDER_RADIAL_SEGMENTS,
   );
-  const cylinderMaterial = new THREE.MeshToonMaterial({
+  const cylinderMaterial = createToonMaterial(toonGradientMap, {
     color: CYLINDER_COLOR,
     depthWrite: true,
   });
   const cylinder = new THREE.Mesh(cylinderGeometry, cylinderMaterial);
   rotGroup.add(cylinder);
+  */
+
+  const objLoader = new OBJLoader();
+  objLoader.load(
+    'public/models/can.obj',
+    function (mesh: THREE.Mesh) {
+      mesh.traverse(function(child: THREE.Mesh) {
+        if (child instanceof THREE.Mesh) {
+          const canMaterial = createToonMaterial(toonGradientMap, {
+            side: THREE.FrontSide,
+            depthWrite: true,
+          });
+          child.material = canMaterial;
+        }
+      });
+
+      mesh.position.set(CAN_POSITION_X, CAN_POSITION_Y, CAN_POSITION_Z);
+      mesh.scale.set(CAN_SCALE_X, CAN_SCALE_Y, CAN_SCALE_Z);
+
+      rotGroup.add(mesh);
+    },
+  );
 
   const ambientLight = new THREE.AmbientLight(
     AMBIENT_LIGHT_COLOR,
@@ -375,7 +420,7 @@ export const initIndexCylinder = () => {
   scene.add(directionalLight);
 
   let beltMesh: THREE.Mesh | null = null;
-  let beltMaterial: THREE.MeshBasicMaterial | null = null;
+  let beltMaterial: THREE.MeshToonMaterial | null = null;
   let beltTexture: THREE.CanvasTexture | null = null;
 
   let beltWidthPx = 0;
@@ -446,7 +491,7 @@ export const initIndexCylinder = () => {
     beltTexture.needsUpdate = true;
 
     if (!beltMaterial) {
-      beltMaterial = new THREE.MeshToonMaterial({
+      beltMaterial = createToonMaterial(toonGradientMap, {
         side: THREE.FrontSide,
         depthWrite: true,
       });
@@ -458,7 +503,7 @@ export const initIndexCylinder = () => {
     isCapturing = false;
   };
 
-  const getBeltScale = () => CYLINDER_HEIGHT / viewportHeight;
+  const getBeltScale = () => BELT_WORLD_SCALE;
 
   const rebuildBeltMesh = (beltScale: number) => {
     if (!beltMaterial || beltWidthPx === 0 || beltHeightPx === 0) {
@@ -492,6 +537,7 @@ export const initIndexCylinder = () => {
     );
 
     beltMesh = new THREE.Mesh(beltGeometry, beltMaterial);
+    beltMesh.position.set(BELT_POSITION_X, BELT_POSITION_Y, BELT_POSITION_Z);
     beltMesh.renderOrder = 1;
     rotGroup.add(beltMesh);
   };
@@ -499,28 +545,6 @@ export const initIndexCylinder = () => {
   const layoutScene = () => {
     if (viewportHeight === 0) {
       return;
-    }
-
-    rotGroup.scale.set(1, 1, 1);
-    rotGroup.updateMatrixWorld(true);
-
-    const top = new THREE.Vector3(0, CYLINDER_HEIGHT / 2, 0);
-    const bottom = new THREE.Vector3(0, -CYLINDER_HEIGHT / 2, 0);
-    top.applyMatrix4(rotGroup.matrixWorld);
-    bottom.applyMatrix4(rotGroup.matrixWorld);
-
-    const projectedCylinderHeight = projectHeightPx(
-      top,
-      bottom,
-      camera,
-      viewportHeight,
-    );
-
-    if (projectedCylinderHeight > 0) {
-      const groupScale = viewportHeight / projectedCylinderHeight;
-      if (Number.isFinite(groupScale) && groupScale > 0) {
-        rotGroup.scale.setScalar(groupScale);
-      }
     }
 
     rebuildBeltMesh(getBeltScale());
@@ -751,8 +775,11 @@ export const initIndexCylinder = () => {
     beltTexture?.dispose();
     beltMaterial?.dispose();
     beltMesh?.geometry.dispose();
+    toonGradientMap.dispose();
+    /*
     cylinderGeometry.dispose();
     cylinderMaterial.dispose();
+    */
     renderer.dispose();
   });
 };

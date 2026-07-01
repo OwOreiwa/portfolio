@@ -2,35 +2,129 @@
 import NavigationLink from './NavigationLink.astro';
 ---
 
-<nav>
-	<ul class="internal-links">
-		<li><NavigationLink href=`${import.meta.env.BASE_URL}/`>Home</NavigationLink></li>
-		<li><NavigationLink href=`${import.meta.env.BASE_URL}/blog`>Blog</NavigationLink></li>
-	</ul>
-</nav>
-<style is:global>
-	nav {
-		margin: 0;
-		padding: 0;
+<div class="menu">
+	<nav>
+		<ul class="internal-links">
+			<li><NavigationLink href=`${import.meta.env.BASE_URL}/`>Home</NavigationLink></li>
+			<li><NavigationLink href=`${import.meta.env.BASE_URL}/blog`>Blog</NavigationLink></li>
+		</ul>
+	</nav>
+</div>
+<div class="navigation">
+	<script>
+		document.querySelector(".hamburger")?.addEventListener("click", () => {
+			document.querySelector(".menu")?.classList.toggle("open");
+			document.querySelector(".hamburger")?.classList.toggle("open");
+		});
+	</script>
+	<div class="hamburger">
+		<span />
+		<span />
+		<span />
+	</div>
+</div>
 
+<style>
+	.navigation {
+		position: sticky;
+		top: 0;
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		width: 100%;
+		height: 100%;
+		z-index: 9999;
+	}
+
+	.hamburger {
+		display: block;
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: 8vw;
+		height: 8vw;
+		min-width: 32px;
+		min-height: 32px;
+		max-width: 64px;
+		max-height: 64px;
+		overflow: hidden;
+		cursor: pointer;
+
+		span {
+			display: block;
+			position: absolute;
+			left: 0;
+			top: 50%;
+			width: 100%;
+			height: calc(100% / 5);
+			background-color: rgb(var(--base-comp-1));
+			transform-origin: center;
+			transition: transform 0.3s ease;
+
+			&:nth-child(1) {
+				transform: translateY(calc(-50% - 200%));
+			}
+			&:nth-child(2) {
+				transform: translateY(-50%);
+			}
+			&:nth-child(3) {
+				transform: translateY(calc(-50% + 200%));
+			}
+		}
+
+		&.open {
+			span:nth-child(1) {
+				transform: translateY(-50%) rotate(-45deg) scaleX(sqrt(2));
+			}
+			span:nth-child(2) {
+				transform: translateY(-50%) translateX(101%);
+			}
+			span:nth-child(3) {
+				transform: translateY(-50%) rotate(45deg) scaleX(sqrt(2));
+			}
+		}
+	}
+
+	.menu {
 		position: fixed;
-		top: 20px;
-		left: 3vw;
+		right: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(var(--base), 0.9);
 		z-index: 1224;
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.3s ease;
+
+		&.open {
+			opacity: 1;
+			pointer-events: auto;
+		}
+
+		nav {
+			a {
+				font-size: 8em;
+				font-weight: bold;
+				letter-spacing: -0.05em;
+				color: rgb(var(--base-comp-1));
+			}
+		}
+		ul {
+			list-style: none;
+			line-height: 1;
+			margin: 0;
+			padding: 0;
+		}
 	}
 
-	nav a {
-		font-size: 0.8em;
-		letter-spacing: -0.05em;
-		color: rgb(var(--base-comp-1));
-	}
-	ul {
-		list-style: none;
-		line-height: 2.2em;
-		padding: 0;
-	}
-	ul li a {
-		display: inline-block;
-		width: calc(4ch + 4em);
+	@media screen and (max-width: 959px) {
+		.menu {
+			nav {
+				a {
+					font-size: 4em;
+				}
+			}
+		}
 	}
 </style>

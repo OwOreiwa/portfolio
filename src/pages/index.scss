@@ -60,7 +60,7 @@
 .belt-unit {
   display: grid;
   width: max-content;
-  min-height: 100vh;
+  height: 1080px;
   grid-template-rows: 1fr auto;
   gap: 16px;
 }
@@ -118,13 +118,12 @@
 
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
   align-items: flex-end;
 
   width: 384px;
 
   .signature-works-label {
-    margin-bottom: 16px;
+    margin: 0;
 
     &::after{
       content: "✦";
@@ -150,7 +149,11 @@
       }
 
       &:not(:last-child) {
-        border-bottom: 2px ridge rgba(var(--gray-light));
+        border-bottom: 1px solid rgba(var(--base-comp-5));
+      }
+
+      &:hover {
+        background-color: rgba(var(--base-comp-5));
       }
     }
   }

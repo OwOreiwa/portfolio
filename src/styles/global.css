@@ -19,7 +19,7 @@
 	--accent-dark: 255, 242, 117;
 	*/
 
-	--base: 255, 255, 255;
+	--base: 232, 232, 232;
 	--base-comp-1: 8, 8, 8;
 	--base-comp-2: 16, 16, 16;
 	--base-comp-3: 32, 32, 32;
@@ -129,13 +129,15 @@ p {
 	font-size: 0.8em;
 	margin-bottom: 1em;
 }
-.prose p {
-	margin-bottom: 2em;
-}
-.prose > * {
-	width: var(--width);
+.prose {
+	max-width: var(--width);
 	margin-left: auto;
 	margin-right: auto;
+	padding-left: 2em !important;
+	padding-right: 2em !important;
+}
+.prose p {
+	margin-bottom: 2em;
 }
 .prose > p:has(>img),
 .image-wider {
