@@ -2,8 +2,6 @@ import html2canvas from "html2canvas";
 import * as THREE from "three";
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 
-const base = import.meta.env.BASE_URL;
-
 const SCENE_BACKGROUND = 0xe8e8e8;
 
 const CAMERA_FOV = 10;
@@ -46,7 +44,7 @@ const DIRECTIONAL_LIGHT_POSITION = { x: 3, y: 4, z: 5 } as const;
 const MAX_DEVICE_PIXEL_RATIO = 2;
 const CAPTURE_BACKGROUND = "#ffffff";
 const LINKS_ROW_CAPTURE_ROTATE = "270deg";
-const TOON_GRADIENT_MAP_URL = `${base}maps/fiveTone.jpg`;
+const TOON_GRADIENT_MAP_URL = `${import.meta.env.BASE_URL}/maps/fiveTone.jpg`;
 
 const loadToonGradientMap = () => {
   const gradientMap = new THREE.TextureLoader().load(TOON_GRADIENT_MAP_URL);
@@ -385,7 +383,7 @@ export const initIndexCylinder = () => {
 
   const objLoader = new OBJLoader();
   objLoader.load(
-    `${base}models/can.obj`,
+    `${import.meta.env.BASE_URL}/models/can.obj`,
     function (mesh: THREE.Mesh) {
       mesh.traverse(function(child: THREE.Mesh) {
         if (child instanceof THREE.Mesh) {
