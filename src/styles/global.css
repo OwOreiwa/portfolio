@@ -141,7 +141,7 @@ p {
 }
 .prose > p:has(>img),
 .image-wider {
-	width: 100vw;
+	width: 100%;
 	max-height: 15vh;
 	aspect-ratio: 21 / 9;
 	overflow: hidden;
